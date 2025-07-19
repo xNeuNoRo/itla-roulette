@@ -415,6 +415,7 @@ namespace MenuUtils
             if (page < 1 || page > totalPages)
                 page = 1;
 
+            // Si la pagina es 1, el offset es 0, si es 2, el offset es rowsPerPage, etc.
             int offset = rowsPerPage * (page - 1);
 
             return ArrayUtils.Methods.TakeFirstN(array, offset, offset + rowsPerPage);
