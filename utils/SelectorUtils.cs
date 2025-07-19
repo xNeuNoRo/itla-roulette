@@ -132,8 +132,8 @@ namespace SelectorUtils
                     {
                         if (hasPlayedAudio)
                         {
-                            Sound.StopAudio();
                             actualAudioTime = Sound.GetAudioCurrentTime();
+                            Sound.StopAudio();
                             hasPaused = true;
                         }
 
@@ -146,8 +146,7 @@ namespace SelectorUtils
                             {
                                 if (hasPaused)
                                 {
-                                    Sound.LoadAudio(SoundSettings.Timer60AudioPath);
-                                    Sound.SeekAudio(actualAudioTime);
+                                    Sound.LoadAudio(SoundSettings.Timer60AudioPath, actualAudioTime);
                                     Sound.SetVolume(0.1f);
                                     Sound.PlayAudio();
                                     hasPaused = false;

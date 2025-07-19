@@ -8,7 +8,7 @@ namespace SoundUtils
         private static AudioFileReader? AudioFile;
         private static bool LoopEnabled = false;
 
-        public static IWavePlayer? LoadAudio(string AudioFilePath, bool loop = false)
+        public static IWavePlayer? LoadAudio(string AudioFilePath, int? startAtMs = null)
         {
             StopAudio();
 
@@ -16,6 +16,14 @@ namespace SoundUtils
                 return AudioPlayer;
 
             AudioFile = new AudioFileReader(AudioFilePath);
+
+            if (
+                startAtMs != null
+                && startAtMs >= 0
+                && startAtMs <= AudioFile.TotalTime.TotalMilliseconds
+            )
+                AudioFile.CurrentTime = TimeSpan.FromMilliseconds(startAtMs.Value);
+
             AudioPlayer = new WaveOutEvent();
             AudioPlayer.Init(AudioFile);
 
@@ -78,25 +86,6 @@ namespace SoundUtils
                 return 0;
 
             return (int)AudioFile.CurrentTime.TotalMilliseconds;
-        }
-
-        public static bool SeekAudio(int milliseconds)
-        {
-            try
-            {
-                if (!HasAudioLoaded() || AudioFile == null || AudioPlayer == null)
-                    return false;
-
-                if (milliseconds < 0 || milliseconds > AudioFile.TotalTime.TotalMilliseconds)
-                    return false;
-
-                AudioFile.CurrentTime = TimeSpan.FromMilliseconds(milliseconds);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
         }
 
         public static bool StopAudio()
