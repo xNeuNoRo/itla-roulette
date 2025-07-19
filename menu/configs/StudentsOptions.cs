@@ -210,10 +210,10 @@ public class StudentsOptions
                                 Console.Clear();
                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                 Console.WriteLine(
-                                    $"Ingresa la nueva cantidad de participaciones de {studentName} con respecto al rol {roleName}:"
+                                    $"Ingresa la nueva cantidad de participaciones de ``{studentName}`` con respecto al rol ``{roleName}``:"
                                 );
                                 Console.WriteLine(
-                                    "Ejemplo: Si quieres ponerle 2 participaciones, el programa lo guardara en el historial como que solo ha participado 2 veces como dicho rol"
+                                    "Ejemplo: Si quieres ponerle 2 participaciones, el programa lo guardara en el historial como que solo ha participado 2 veces como dicho rol\nOJO: Si le pones 0 participaciones, se borrara todo el historial del rol: su puntuacion, fecha, etc."
                                 );
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.WriteLine("(Escribe -1 para cancelar)\n");
@@ -256,14 +256,22 @@ public class StudentsOptions
                                         }
 
                                         Console.Clear();
-                                        StudentManager.editParticipation(
-                                            ref student,
-                                            roleName,
-                                            newParticipationsParsed
-                                        );
+                                        if (newParticipationsParsed == 0)
+                                        {
+                                            StudentManager.resetRoleStudentData(
+                                                studentName,
+                                                roleName
+                                            );
+                                        }
+                                        else
+                                            StudentManager.editParticipation(
+                                                ref student,
+                                                roleName,
+                                                newParticipationsParsed
+                                            );
                                         Console.ForegroundColor = TextColor.Success;
                                         Console.WriteLine(
-                                            $"Has modificado exitosamente las participaciones de {studentName} en el rol {roleName}"
+                                            $"Has modificado exitosamente las participaciones de {studentName} en el rol {roleName}!{(newParticipationsParsed == 0 ? "\nOJO: se ha borrado todo el historial del rol, ya que estableciste 0 participaciones.": "")}"
                                         );
                                         Console.WriteLine(
                                             "Puedes confirmar en el historial del programa"

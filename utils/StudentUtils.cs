@@ -126,64 +126,72 @@ namespace StudentUtils
             updateStudentsList(student, resettedStudent);
         }
 
+        public static void resetRoleStudentData(string studentName, string role)
+        {
+            string student = getStudentByName(studentName);
+            string originalData = student;
+            string[] studentData = parseData(student);
+            string studentRoles = studentData[3];
+            string studentRolesParticip = studentData[4];
+            string studentRolesScore = studentData[5];
+            string studentRolesDate = studentData[6];
+            int roleIndex = getRoleIndex(student, role);
+
+            if (roleIndex == -1)
+                return;
+
+            string[] studentRolesParsed =
+                studentRoles.Length <= 0 ? [] : StringUtils.Methods.Split(studentRoles, ',');
+            studentRolesParsed = ArrayUtils.Methods.Filter(studentRolesParsed, r => r != role);
+            studentData[3] = StringUtils.Methods.Join(studentRolesParsed, ",");
+
+            string[] studentRolesPartParsed =
+                studentRolesParticip.Length <= 0
+                    ? []
+                    : StringUtils.Methods.Split(studentRolesParticip, ',');
+            studentRolesPartParsed[roleIndex] = "";
+            studentRolesPartParsed = ArrayUtils.Methods.Filter(
+                studentRolesPartParsed,
+                p => !StringUtils.Methods.IsNullOrWhiteSpace(p)
+            );
+            studentData[4] = StringUtils.Methods.Join(studentRolesPartParsed, ",");
+
+            string[] studentRoleScoreParsed =
+                studentRolesScore.Length <= 0
+                    ? []
+                    : StringUtils.Methods.Split(studentRolesScore, ',');
+            studentRoleScoreParsed[roleIndex] = "";
+            studentRoleScoreParsed = ArrayUtils.Methods.Filter(
+                studentRoleScoreParsed,
+                s => !StringUtils.Methods.IsNullOrWhiteSpace(s)
+            );
+            studentData[5] = StringUtils.Methods.Join(studentRoleScoreParsed, ",");
+
+            string[] studentRoleDateParsed =
+                studentRolesDate.Length <= 0
+                    ? []
+                    : StringUtils.Methods.Split(studentRolesDate, ',');
+            studentRoleDateParsed[roleIndex] = "";
+            studentRoleDateParsed = ArrayUtils.Methods.Filter(
+                studentRoleDateParsed,
+                d => !StringUtils.Methods.IsNullOrWhiteSpace(d)
+            );
+            studentData[6] = StringUtils.Methods.Join(studentRoleDateParsed, ",");
+
+            student = StringUtils.Methods.Join(studentData, "|");
+            updateStudentsList(originalData, student);
+        }
+
         public static void deleteAllRoleData(string role)
         {
-            string[] studentsWithTheRole = ArrayUtils.Methods.Filter(
+            string[] studentsWithTheRole = ArrayUtils.Methods.Map(ArrayUtils.Methods.Filter(
                 studentsList,
                 student => hasRole(student, role) && !isActiveRole(student, role)
-            );
+            ), student=>getName(student));
 
             for (int i = 0; i < studentsWithTheRole.Length; i++)
             {
-                string student = studentsWithTheRole[i];
-                string originalData = student;
-                string[] studentData = parseData(student);
-                string studentRoles = studentData[3];
-                string studentRolesParticip = studentData[4];
-                string studentRolesScore = studentData[5];
-                string studentRolesDate = studentData[6];
-                int roleIndex = getRoleIndex(student, role);
-
-                string[] studentRolesParsed =
-                    studentRoles.Length <= 0 ? [] : StringUtils.Methods.Split(studentRoles, ',');
-                studentRolesParsed = ArrayUtils.Methods.Filter(studentRolesParsed, r => r != role);
-                studentData[3] = StringUtils.Methods.Join(studentRolesParsed, ",");
-
-                string[] studentRolesPartParsed =
-                    studentRolesParticip.Length <= 0
-                        ? []
-                        : StringUtils.Methods.Split(studentRolesParticip, ',');
-                studentRolesPartParsed[roleIndex] = "";
-                studentRolesPartParsed = ArrayUtils.Methods.Filter(
-                    studentRolesPartParsed,
-                    p => !StringUtils.Methods.IsNullOrWhiteSpace(p)
-                );
-                studentData[4] = StringUtils.Methods.Join(studentRolesPartParsed, ",");
-
-                string[] studentRoleScoreParsed =
-                    studentRolesScore.Length <= 0
-                        ? []
-                        : StringUtils.Methods.Split(studentRolesScore, ',');
-                studentRoleScoreParsed[roleIndex] = "";
-                studentRoleScoreParsed = ArrayUtils.Methods.Filter(
-                    studentRoleScoreParsed,
-                    s => !StringUtils.Methods.IsNullOrWhiteSpace(s)
-                );
-                studentData[5] = StringUtils.Methods.Join(studentRoleScoreParsed, ",");
-
-                string[] studentRoleDateParsed =
-                    studentRolesDate.Length <= 0
-                        ? []
-                        : StringUtils.Methods.Split(studentRolesDate, ',');
-                studentRoleDateParsed[roleIndex] = "";
-                studentRoleDateParsed = ArrayUtils.Methods.Filter(
-                    studentRoleDateParsed,
-                    d => !StringUtils.Methods.IsNullOrWhiteSpace(d)
-                );
-                studentData[6] = StringUtils.Methods.Join(studentRoleDateParsed, ",");
-
-                student = StringUtils.Methods.Join(studentData, "|");
-                updateStudentsList(originalData, student);
+                resetRoleStudentData(studentsWithTheRole[i], role);
             }
         }
 
