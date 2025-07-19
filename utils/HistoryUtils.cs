@@ -1,8 +1,7 @@
-
 using Config;
-using SoundUtils;
 using MenuUtils;
 using RoleUtils;
+using SoundUtils;
 using StudentUtils;
 
 namespace HistoryUtils
@@ -142,10 +141,10 @@ namespace HistoryUtils
 
             foreach (string row in allRows)
             {
-                string[] rowSplitted = ArrayUtils.Methods.Filter(
+                string[] rowSplitted = ArrayUtils.Methods.Map(ArrayUtils.Methods.Filter(
                     StringUtils.Methods.Split(row, '│'),
                     param => !StringUtils.Methods.IsNullOrWhiteSpace(param)
-                );
+                ), param => param.Trim());
                 if (
                     !StringUtils.Methods.IsNullOrWhiteSpace(name)
                     && !StringUtils.Methods.Match(rowSplitted[0].ToLower(), name.ToLower(), 3)
@@ -297,13 +296,25 @@ namespace HistoryUtils
                         return;
                     }
                     else if (key == ConsoleKey.F7)
+                    {
+                        currentPage = 0;
                         filterName = AskFilter("nombre");
+                    }
                     else if (key == ConsoleKey.F8)
+                    {
+                        currentPage = 0;
                         filterRole = AskFilter("rol");
+                    }
                     else if (key == ConsoleKey.F9)
+                    {
+                        currentPage = 0;
                         filterAttendance = AskFilter("asistencia");
+                    }
                     else if (key == ConsoleKey.F10)
+                    {
+                        currentPage = 0;
                         filterScore = AskFilter("puntuacion");
+                    }
                     else if (key == ConsoleKey.F12)
                     {
                         int confirmChoice = Menu.InteractiveMenu(
@@ -333,6 +344,7 @@ namespace HistoryUtils
                     }
                     else if (key == ConsoleKey.F4)
                     {
+                        currentPage = 0;
                         filterName = "";
                         filterRole = "";
                         filterAttendance = "";
