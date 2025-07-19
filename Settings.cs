@@ -133,6 +133,11 @@ namespace Config
             AppContext.BaseDirectory
         );
 
+        public static readonly string ChoicesAudioPath = Path.GetFullPath(
+            @"../../../audio/choices.mp3",
+            AppContext.BaseDirectory
+        );
+
         public static readonly string EnterAudioPath = Path.GetFullPath(
             @"../../../audio/enter.mp3",
             AppContext.BaseDirectory

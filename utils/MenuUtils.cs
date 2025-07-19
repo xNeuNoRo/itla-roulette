@@ -296,27 +296,46 @@ namespace MenuUtils
                     case ConsoleKey.W:
                     case ConsoleKey.UpArrow:
                         {
-                            Sound.LoadAudio(SoundSettings.BackAudioPath);
+                            Sound.LoadAudio(SoundSettings.ChoicesAudioPath);
                             Sound.PlayAudio();
                             Sound.SetVolume(0.3f);
+
                             selectedIndex =
                                 (selectedIndex == 0) ? choices.Length - 1 : selectedIndex - 1;
                         }
                         break;
                     case ConsoleKey.S:
                     case ConsoleKey.DownArrow:
-                        selectedIndex =
-                            (selectedIndex == choices.Length - 1) ? 0 : selectedIndex + 1;
+                        {
+                            Sound.LoadAudio(SoundSettings.ChoicesAudioPath);
+                            Sound.PlayAudio();
+                            Sound.SetVolume(0.3f);
+
+                            selectedIndex =
+                                (selectedIndex == choices.Length - 1) ? 0 : selectedIndex + 1;
+                        }
                         break;
                     case ConsoleKey.A:
                     case ConsoleKey.LeftArrow:
-                        if (totalPages > 1)
-                            return -2;
+                        {
+                            Sound.LoadAudio(SoundSettings.ChoicesAudioPath);
+                            Sound.PlayAudio();
+                            Sound.SetVolume(0.3f);
+
+                            if (totalPages > 1)
+                                return -2;
+                        }
                         break;
                     case ConsoleKey.D:
                     case ConsoleKey.RightArrow:
-                        if (totalPages > 1)
-                            return -3;
+                        {
+                            Sound.LoadAudio(SoundSettings.ChoicesAudioPath);
+                            Sound.PlayAudio();
+                            Sound.SetVolume(0.3f);
+
+                            if (totalPages > 1)
+                                return -3;
+                        }
                         break;
                     case ConsoleKey.E:
                         if (isStudentsList || isRoleList)
@@ -371,14 +390,26 @@ namespace MenuUtils
                     }
                     case ConsoleKey.W:
                     case ConsoleKey.UpArrow:
-                        selectedIndex =
-                            (selectedIndex == 0) ? choices.Length - 1 : selectedIndex - 1;
+                        {
+                            Sound.LoadAudio(SoundSettings.ChoicesAudioPath);
+                            Sound.PlayAudio();
+                            Sound.SetVolume(0.3f);
+
+                            selectedIndex =
+                                (selectedIndex == 0) ? choices.Length - 1 : selectedIndex - 1;
+                        }
                         break;
 
                     case ConsoleKey.S:
                     case ConsoleKey.DownArrow:
-                        selectedIndex =
-                            (selectedIndex == choices.Length - 1) ? 0 : selectedIndex + 1;
+                        {
+                            Sound.LoadAudio(SoundSettings.ChoicesAudioPath);
+                            Sound.PlayAudio();
+                            Sound.SetVolume(0.3f);
+
+                            selectedIndex =
+                                (selectedIndex == choices.Length - 1) ? 0 : selectedIndex + 1;
+                        }
                         break;
 
                     case ConsoleKey.H:
