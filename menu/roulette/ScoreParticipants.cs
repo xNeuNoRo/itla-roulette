@@ -15,7 +15,7 @@ public class ScoreParticipants
             Console.ForegroundColor = TextColor.Questions;
             Console.WriteLine("─────────────────────────────────────────────────────────");
             Console.WriteLine(
-                $"Como consideras que fue el desempeño del estudiante ``{StudentManager.getName(student)}``\nmientras se desenvolvia en el papel como ``{studentRole}``?"
+                $"Del 0-10 como puntuacion considerada\ncomo consideras que fue el desempeño del estudiante ``{StudentManager.getName(student)}``\nmientras se desenvolvia en el papel como ``{studentRole}``?"
             );
             Console.WriteLine("─────────────────────────────────────────────────────────");
 
