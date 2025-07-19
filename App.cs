@@ -19,10 +19,12 @@ namespace IR_Project
                 Sound.PlayAudio();
                 Sound.SetVolume(SoundSettings.DefaultVolume);
 
-                Menu.ProgramLogo(ConsoleColor.Cyan);
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Menu.AnimatedLogo();
+
                 Console.ForegroundColor = TextColor.Warning;
 
-                Console.WriteLine("Presiona cualquier tecla para entrar al programa...");
+                Console.WriteLine("\nPresiona cualquier tecla para entrar al programa...");
                 Console.ReadKey(true);
 
                 Sound.StopAudio();
