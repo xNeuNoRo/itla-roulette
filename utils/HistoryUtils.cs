@@ -8,9 +8,9 @@ namespace HistoryUtils
 {
     public class HistoryFunctions
     {
-        public static int actualScoreFilter = -1;
+        private static int actualScoreFilter = -1;
 
-        public static string[] scoreChoices = ["Mayor a", "Menor a", "Igual a", "Diferente a"];
+        private static string[] scoreChoices = ["Mayor a", "Menor a", "Igual a", "Diferente a"];
 
         private static string[] DrawHistoryPanelRows()
         {
