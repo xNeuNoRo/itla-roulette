@@ -59,7 +59,7 @@ public class RouletteTimer
         Menu.DrawRoulettePanel(studentsSelected, panelWidth);
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine(
-            "TIP: Puedes finalizar el temporizador en cualquier momento presionando ESC\n"
+            "TIP: Puedes finalizar el temporizador en cualquier momento presionando ESC\nPresiona [P] para pausar la cuenta regresiva y [R] para reanudarla.\n"
         );
         Console.ResetColor();
         Selector.CountdownTimer(timeParsed);

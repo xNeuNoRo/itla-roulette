@@ -134,7 +134,6 @@ namespace SelectorUtils
                         {
                             Sound.StopAudio();
                             actualAudioTime = Sound.GetAudioCurrentTime();
-                            hasPlayedAudio = false;
                             hasPaused = true;
                         }
 
@@ -151,7 +150,6 @@ namespace SelectorUtils
                                     Sound.SeekAudio(actualAudioTime);
                                     Sound.SetVolume(0.1f);
                                     Sound.PlayAudio();
-                                    hasPlayedAudio = true;
                                     hasPaused = false;
                                 }
                                 pausedLoop = false;
@@ -164,7 +162,7 @@ namespace SelectorUtils
                 int mins = totalSeconds / 60;
                 int secs = totalSeconds % 60;
 
-                string timeMessage = $"Tiempo restante: {mins:D2}:{secs:D2}   "; // D2 => 0=00, 4=04, 8=08 y asi..
+                string timeMessage = $"\rTiempo restante: {mins:D2}:{secs:D2}   "; // D2 => 0=00, 4=04, 8=08 y asi..
 
                 if (totalSeconds <= 63)
                 {
@@ -186,7 +184,7 @@ namespace SelectorUtils
                     Console.ForegroundColor = ConsoleColor.Gray;
                 }
 
-                Console.WriteLine(timeMessage);
+                Console.Write(timeMessage);
 
                 Thread.Sleep(1000);
                 totalSeconds--;
