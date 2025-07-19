@@ -72,6 +72,33 @@ namespace SoundUtils
             });
         }
 
+        public static int GetAudioCurrentTime()
+        {
+            if (!HasAudioLoaded() || AudioFile == null || AudioPlayer == null)
+                return 0;
+
+            return (int)AudioFile.CurrentTime.TotalMilliseconds;
+        }
+
+        public static bool SeekAudio(int milliseconds)
+        {
+            try
+            {
+                if (!HasAudioLoaded() || AudioFile == null || AudioPlayer == null)
+                    return false;
+
+                if (milliseconds < 0 || milliseconds > AudioFile.TotalTime.TotalMilliseconds)
+                    return false;
+
+                AudioFile.CurrentTime = TimeSpan.FromMilliseconds(milliseconds);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public static bool StopAudio()
         {
             try

@@ -111,6 +111,8 @@ namespace SelectorUtils
         {
             int totalSeconds = minutes * 60;
             bool hasPlayedAudio = false;
+            bool hasPaused = false;
+            int actualAudioTime = 0;
 
             while (totalSeconds >= 0)
             {
@@ -126,13 +128,43 @@ namespace SelectorUtils
                         Console.ResetColor();
                         return;
                     }
+                    else if (key == ConsoleKey.P)
+                    {
+                        if (hasPlayedAudio)
+                        {
+                            Sound.StopAudio();
+                            actualAudioTime = Sound.GetAudioCurrentTime();
+                            hasPlayedAudio = false;
+                            hasPaused = true;
+                        }
+
+                        ConsoleKey selectedKey = Console.ReadKey(true).Key;
+
+                        bool pausedLoop = true;
+                        while (pausedLoop)
+                        {
+                            if (selectedKey == ConsoleKey.R)
+                            {
+                                if (hasPaused)
+                                {
+                                    Sound.LoadAudio(SoundSettings.Timer60AudioPath);
+                                    Sound.SeekAudio(actualAudioTime);
+                                    Sound.SetVolume(0.1f);
+                                    Sound.PlayAudio();
+                                    hasPlayedAudio = true;
+                                    hasPaused = false;
+                                }
+                                pausedLoop = false;
+                            }
+                        }
+                    }
                     // Ignorar otras teclas
                 }
 
                 int mins = totalSeconds / 60;
                 int secs = totalSeconds % 60;
 
-                string timeFormatted = $"{mins:D2}:{secs:D2}"; // D2 => 0=00, 4=04, 8=08 y asi..
+                string timeMessage = $"Tiempo restante: {mins:D2}:{secs:D2}   "; // D2 => 0=00, 4=04, 8=08 y asi..
 
                 if (totalSeconds <= 63)
                 {
@@ -154,7 +186,8 @@ namespace SelectorUtils
                     Console.ForegroundColor = ConsoleColor.Gray;
                 }
 
-                Console.Write($"\rTiempo restante: {timeFormatted}  ");
+                Console.WriteLine(timeMessage);
+
                 Thread.Sleep(1000);
                 totalSeconds--;
             }
