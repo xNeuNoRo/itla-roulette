@@ -118,6 +118,11 @@ namespace Config
 
     public class SoundSettings
     {
+        public static readonly string IntroAudioPath = Path.GetFullPath(
+            @"../../../audio/intro.mp3",
+            AppContext.BaseDirectory
+        );
+
         public static readonly string RouletteAudioPath = Path.GetFullPath(
             @"../../../audio/roulette.mp3",
             AppContext.BaseDirectory

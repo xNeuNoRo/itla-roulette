@@ -1,7 +1,7 @@
-﻿using Handlers;
+﻿using Config;
+using Handlers;
 using MenuUtils;
 using SoundUtils;
-using StudentUtils;
 
 // Interactive Roulette Project
 namespace IR_Project
@@ -10,6 +10,20 @@ namespace IR_Project
     {
         static void Main()
         {
+            // Intro del programa
+            Sound.LoadAudio(SoundSettings.IntroAudioPath);
+            Sound.PlayAudio();
+            Sound.SetVolume(SoundSettings.DefaultVolume);
+
+            Menu.ProgramLogo(ConsoleColor.Cyan);
+            Console.ForegroundColor = TextColor.Warning;
+
+            Console.WriteLine("Presiona cualquier tecla para entrar al programa...");
+            Console.ReadKey(true);
+
+            Sound.StopAudio();
+            Console.ResetColor();
+
             bool loop = true;
 
             while (loop)
