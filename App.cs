@@ -11,6 +11,7 @@ namespace IR_Project
         static void Main()
         {
             // Intro del programa
+            Console.Clear();
             Sound.LoadAudio(SoundSettings.IntroAudioPath);
             Sound.PlayAudio();
             Sound.SetVolume(SoundSettings.DefaultVolume);
