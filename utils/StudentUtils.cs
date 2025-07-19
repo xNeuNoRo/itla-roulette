@@ -126,6 +126,46 @@ namespace StudentUtils
             updateStudentsList(student, resettedStudent);
         }
 
+        public static void resetStudentIncompleteData(string student)
+        {
+            string originalData = student;
+            string[] studentData = parseData(student);
+            string activeRole = getActiveRole(student);
+
+            if (activeRole.Length <= 0)
+                return;
+
+            int roleIndex = getRoleIndex(student, activeRole);
+
+            if (roleIndex == -1)
+                return;
+
+            string studentRoles = studentData[3];
+            string studentRolesDate = studentData[6];
+
+            string[] studentRolesParsed =
+                studentRoles.Length <= 0 ? [] : StringUtils.Methods.Split(studentRoles, ',');
+            studentRolesParsed = ArrayUtils.Methods.Filter(
+                studentRolesParsed,
+                r => r != $"{activeRole}:1"
+            );
+            studentData[3] = StringUtils.Methods.Join(studentRolesParsed, ",");
+
+            string[] studentRolesDateParsed =
+                studentRolesDate.Length <= 0
+                    ? []
+                    : StringUtils.Methods.Split(studentRolesDate, ',');
+            studentRolesDateParsed[roleIndex] = "";
+            studentRolesDateParsed = ArrayUtils.Methods.Filter(
+                studentRolesDateParsed,
+                d => !StringUtils.Methods.IsNullOrWhiteSpace(d)
+            );
+            studentData[6] = StringUtils.Methods.Join(studentRolesDateParsed, ",");
+
+            student = StringUtils.Methods.Join(studentData, "|");
+            updateStudentsList(originalData, student);
+        }
+
         public static void resetRoleStudentData(string studentName, string role)
         {
             string student = getStudentByName(studentName);
@@ -184,10 +224,13 @@ namespace StudentUtils
 
         public static void deleteAllRoleData(string role)
         {
-            string[] studentsWithTheRole = ArrayUtils.Methods.Map(ArrayUtils.Methods.Filter(
-                studentsList,
-                student => hasRole(student, role) && !isActiveRole(student, role)
-            ), student=>getName(student));
+            string[] studentsWithTheRole = ArrayUtils.Methods.Map(
+                ArrayUtils.Methods.Filter(
+                    studentsList,
+                    student => hasRole(student, role) && !isActiveRole(student, role)
+                ),
+                student => getName(student)
+            );
 
             for (int i = 0; i < studentsWithTheRole.Length; i++)
             {

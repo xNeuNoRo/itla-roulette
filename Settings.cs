@@ -160,4 +160,10 @@ namespace Config
 
         public static readonly float DefaultVolume = 0.5f;
     }
+
+    public class AdvancedSettings
+    {
+        // Si se omite la intro del programa
+        public static readonly bool SkipIntro = false;
+    }
 }

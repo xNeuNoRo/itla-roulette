@@ -435,16 +435,13 @@ namespace MenuUtils
 
         public static T[] GetPagination<T>(T[] array, int page = 1, int rowsPerPage = 15)
         {
-            if (array == null || array.Length == 0)
-                return [];
-
             int totalPages = array.Length / rowsPerPage;
 
             if (array.Length % rowsPerPage != 0)
                 totalPages++;
 
-            if (page < 1 || page > totalPages)
-                page = 1;
+            if (array == null || array.Length == 0 || page < 1 || page > totalPages)
+                return [];
 
             // Si la pagina es 1, el offset es 0, si es 2, el offset es rowsPerPage, etc.
             int offset = rowsPerPage * (page - 1);
