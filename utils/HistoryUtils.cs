@@ -8,6 +8,10 @@ namespace HistoryUtils
 {
     public class HistoryFunctions
     {
+        public static int actualScoreFilter = -1;
+
+        public static string[] scoreChoices = ["Mayor a", "Menor a", "Igual a", "Diferente a"];
+
         private static string[] DrawHistoryPanelRows()
         {
             string[] studentsLists = StudentManager.studentsList;
@@ -141,10 +145,13 @@ namespace HistoryUtils
 
             foreach (string row in allRows)
             {
-                string[] rowSplitted = ArrayUtils.Methods.Map(ArrayUtils.Methods.Filter(
-                    StringUtils.Methods.Split(row, '│'),
-                    param => !StringUtils.Methods.IsNullOrWhiteSpace(param)
-                ), param => param.Trim());
+                string[] rowSplitted = ArrayUtils.Methods.Map(
+                    ArrayUtils.Methods.Filter(
+                        StringUtils.Methods.Split(row, '│'),
+                        param => !StringUtils.Methods.IsNullOrWhiteSpace(param)
+                    ),
+                    param => param.Trim()
+                );
                 if (
                     !StringUtils.Methods.IsNullOrWhiteSpace(name)
                     && !StringUtils.Methods.Match(rowSplitted[0].ToLower(), name.ToLower(), 3)
@@ -174,7 +181,15 @@ namespace HistoryUtils
                     if (!int.TryParse(rowSplitted[5], out int rowScore))
                         continue;
 
-                    if (scoreParsed > rowScore)
+                    //["Mayor a", "Menor a", "Igual a", "Diferente a"];
+
+                    if (actualScoreFilter == 0 && scoreParsed >= rowScore)
+                        continue;
+                    else if (actualScoreFilter == 1 && scoreParsed <= rowScore)
+                        continue;
+                    else if (actualScoreFilter == 2 && scoreParsed != rowScore)
+                        continue;
+                    else if (actualScoreFilter == 3 && scoreParsed == rowScore)
                         continue;
                 }
 
@@ -184,7 +199,7 @@ namespace HistoryUtils
             return filtered;
         }
 
-        private static string AskFilter(string tipo)
+        private static string AskFilter(string tipo, string? scoreChoice = null)
         {
             Console.Clear();
             if (tipo == "asistencia")
@@ -211,7 +226,9 @@ namespace HistoryUtils
             else
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Filtrar por {tipo}:");
+                Console.WriteLine(
+                    $"Filtrar por {tipo}{(scoreChoice != null ? $" {scoreChoice}" : "")}:"
+                );
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(
                     "(Escribe -1 para cancelar o presiona Enter sin escribir nada)\n"
@@ -219,11 +236,11 @@ namespace HistoryUtils
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.Write($"{tipo} > ");
                 Console.ResetColor();
-                string name = Console.ReadLine()!.Trim();
-                if (name == "-1")
+                string val = Console.ReadLine()!.Trim();
+                if (val == "-1")
                     return "";
                 else
-                    return name;
+                    return val;
             }
         }
 
@@ -279,14 +296,24 @@ namespace HistoryUtils
                     }
 
                     string actualFilters =
-                        $"Nombre: {(!StringUtils.Methods.IsNullOrWhiteSpace(filterName) ? filterName : "N/A")}, Roles: {(!StringUtils.Methods.IsNullOrWhiteSpace(filterRole) ? filterRole : "N/A")}, Asistencia: {(!StringUtils.Methods.IsNullOrWhiteSpace(filterAttendance) ? filterAttendance : "N/A")}, Puntuacion: {(!StringUtils.Methods.IsNullOrWhiteSpace(filterScore) ? filterScore : "N/A")}";
+                        $"\nNombre: {(!StringUtils.Methods.IsNullOrWhiteSpace(filterName) ? filterName : "N/A")}, Roles: {(!StringUtils.Methods.IsNullOrWhiteSpace(filterRole) ? filterRole : "N/A")}, Asistencia: {(!StringUtils.Methods.IsNullOrWhiteSpace(filterAttendance) ? filterAttendance : "N/A")}, Puntuacion:{(actualScoreFilter != -1 ? $" {scoreChoices[actualScoreFilter]}" : "")} {(!StringUtils.Methods.IsNullOrWhiteSpace(filterScore) ? filterScore : "N/A")}";
                     DrawHistoryFooter(currentPage, totalPages, actualFilters);
 
                     ConsoleKey key = Console.ReadKey(true).Key;
                     if (key == ConsoleKey.RightArrow && currentPage < totalPages - 1)
+                    {
+                        Sound.LoadAudio(SoundSettings.ChoicesAudioPath);
+                        Sound.PlayAudio();
+                        Sound.SetVolume(0.3f);
                         currentPage++;
+                    }
                     else if (key == ConsoleKey.LeftArrow && currentPage > 0)
+                    {
+                        Sound.LoadAudio(SoundSettings.ChoicesAudioPath);
+                        Sound.PlayAudio();
+                        Sound.SetVolume(0.3f);
                         currentPage--;
+                    }
                     else if (key == ConsoleKey.Escape)
                     {
                         Sound.LoadAudio(SoundSettings.BackAudioPath);
@@ -312,8 +339,17 @@ namespace HistoryUtils
                     }
                     else if (key == ConsoleKey.F10)
                     {
-                        currentPage = 0;
-                        filterScore = AskFilter("puntuacion");
+                        int scoreChoice = Menu.InteractiveMenu(
+                            "Selecciona como deseas filtrar la puntuacion",
+                            scoreChoices
+                        );
+
+                        if (scoreChoice != -1)
+                        {
+                            currentPage = 0;
+                            actualScoreFilter = scoreChoice;
+                            filterScore = AskFilter("puntuacion", scoreChoices[scoreChoice]);
+                        }
                     }
                     else if (key == ConsoleKey.F12)
                     {
