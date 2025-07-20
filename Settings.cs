@@ -167,6 +167,6 @@ namespace Config
         public static readonly bool SkipIntro = false;
 
         // Si se oculta el cursor de la consola
-        public static readonly bool HideCursor = true;
+        public static readonly bool HideCursor = false;
     }
 }
