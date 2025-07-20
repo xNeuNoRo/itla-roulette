@@ -322,7 +322,14 @@ namespace StudentUtils
             if (!bool.TryParse(studentData[1], out bool isPresent))
                 return false;
 
-            return isPresent;
+            if (!long.TryParse(studentData[2], out long attendanceDateRaw))
+                return false;
+
+            DateTime attendanceDateParsed = DateTimeOffset
+                .FromUnixTimeMilliseconds(attendanceDateRaw)
+                .LocalDateTime.Date;
+
+            return isPresent && attendanceDateParsed == DateTime.Now.Date;
         }
 
         public static void clearRoles(ref string student)

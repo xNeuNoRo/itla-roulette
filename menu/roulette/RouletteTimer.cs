@@ -32,8 +32,9 @@ public class RouletteTimer
                 Console.WriteLine(
                     "\n[ERROR]: Has insertado un numero invalido!\nIngresa nuevamente un numero entero valido.\n"
                 );
-                Console.ResetColor();
+                Console.ForegroundColor = TextColor.Warning;
                 Console.WriteLine("Presiona cualquier tecla para volver a intentarlo...");
+                Console.ResetColor();
                 Console.ReadKey(true);
             }
             else

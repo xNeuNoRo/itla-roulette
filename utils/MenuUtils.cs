@@ -106,7 +106,7 @@ namespace MenuUtils
 
             int calculatedTabsVal =
                 maxLengthInMenu > 70 ? 2
-                : maxLengthInMenu > 50 ? 3
+                : maxLengthInMenu > 60 ? 3
                 : 4;
 
             string calculatedTabs = StringUtils.Methods.fillRight("\t", calculatedTabsVal, '\t');

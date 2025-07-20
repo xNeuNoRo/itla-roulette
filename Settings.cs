@@ -161,9 +161,12 @@ namespace Config
         public static readonly float DefaultVolume = 0.5f;
     }
 
-    public class AdvancedSettings
+    public class AppSettings
     {
         // Si se omite la intro del programa
         public static readonly bool SkipIntro = false;
+
+        // Si se oculta el cursor de la consola
+        public static readonly bool HideCursor = true;
     }
 }

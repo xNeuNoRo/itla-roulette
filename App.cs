@@ -11,8 +11,10 @@ namespace IR_Project
     {
         static void Main()
         {
+            Console.CursorVisible = AppSettings.HideCursor;
+
             // Intro del programa
-            if (!AdvancedSettings.SkipIntro)
+            if (!AppSettings.SkipIntro)
             {
                 Console.Clear();
                 Sound.LoadAudio(SoundSettings.IntroAudioPath);
@@ -29,6 +31,7 @@ namespace IR_Project
 
                 Sound.StopAudio();
                 Console.ResetColor();
+                Console.Clear();
             }
 
             // Manejar estudiantes con participacion previa pero que no han sido puntuados

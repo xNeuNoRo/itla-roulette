@@ -25,8 +25,9 @@ public class StartRoulette
 
             Console.ForegroundColor = TextColor.Error;
             Console.WriteLine("[ERROR]: Debes pasar lista de hoy antes de ejecutar la ruleta!");
-            Console.ResetColor();
+            Console.ForegroundColor = TextColor.Warning;
             Console.WriteLine("\nPresiona una tecla para continuar...");
+            Console.ResetColor();
             Console.ReadKey(true);
             return;
         }
@@ -63,8 +64,9 @@ public class StartRoulette
 
                     Console.ForegroundColor = TextColor.Error;
                     Console.WriteLine("[ERROR]: Ya no hay mas estudiantes para seleccionar!");
-                    Console.ResetColor();
+                    Console.ForegroundColor = TextColor.Warning;
                     Console.WriteLine("\nPresiona una tecla para continuar...");
+                    Console.ResetColor();
                     Console.ReadKey(true);
 
                     if (!isRerolled)

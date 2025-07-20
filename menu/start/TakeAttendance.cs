@@ -33,8 +33,9 @@ public class TakeAttendance
             Console.WriteLine(
                 $"Se encuentran presentes {StudentManager.studentsList.Length - absentStudentsNew.Length} de {StudentManager.studentsList.Length} estudiantes el dia de hoy!"
             );
-            Console.ResetColor();
+            Console.ForegroundColor = TextColor.Warning;
             Console.WriteLine("\nPresiona una tecla para continuar...");
+            Console.ResetColor();
             Console.ReadKey(true);
             return;
         }
@@ -81,8 +82,9 @@ public class TakeAttendance
             Console.WriteLine(
                 $"Se encuentran presentes {StudentManager.studentsList.Length} de {StudentManager.studentsList.Length} estudiantes el dia de hoy!"
             );
-            Console.ResetColor();
+            Console.ForegroundColor = TextColor.Warning;
             Console.WriteLine("\nPresiona una tecla para continuar...");
+            Console.ResetColor();
             Console.ReadKey(true);
         }
     }

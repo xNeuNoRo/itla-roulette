@@ -33,8 +33,9 @@ public class ScoreParticipants
                 Console.WriteLine(
                     "\n[ERROR]: Has insertado un numero invalido!\nIngresa nuevamente un numero entero valido.\n"
                 );
-                Console.ResetColor();
+                Console.ForegroundColor = TextColor.Warning;
                 Console.WriteLine("Presiona cualquier tecla para volver a intentarlo...");
+                Console.ResetColor();
                 Console.ReadKey(true);
 
                 i--;
@@ -51,8 +52,9 @@ public class ScoreParticipants
                 Console.WriteLine(
                     "\n[ERROR]: Debes ingresar una puntuacion de 0-10!\nIngresa nuevamente una puntuacion valida.\n"
                 );
-                Console.ResetColor();
+                Console.ForegroundColor = TextColor.Warning;
                 Console.WriteLine("Presiona cualquier tecla para volver a intentarlo...");
+                Console.ResetColor();
                 Console.ReadKey(true);
 
                 i--;
