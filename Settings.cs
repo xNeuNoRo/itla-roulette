@@ -61,7 +61,7 @@ namespace Config
         // Lista de roles default
         public static readonly string[] DefaultRoles =
         [
-            "Desarrollador en Vivo",
+            "Desarrollador en vivo",
             "Facilitador de Ejercicio",
         ];
 
