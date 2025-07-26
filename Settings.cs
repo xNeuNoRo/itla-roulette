@@ -62,7 +62,7 @@ namespace Config
         public static readonly string[] DefaultRoles =
         [
             "Desarrollador en vivo",
-            "Facilitador de Ejercicio",
+            "Facilitador de ejercicio",
         ];
 
         // Cantidad minima de roles
